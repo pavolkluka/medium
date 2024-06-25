@@ -87,4 +87,15 @@ check_working_directory $DIR_ARTIFACTS
 check_working_directory $DIR_MALICIOUS
 check_working_directory $DIR_OUTPUT
 
+# 1 HASH
+echo -e "\nHash:"
+for SUM in md5sum sha1sum sha256sum
+do
+  $SUM --tag $PATH_FILE
+done | $BIN_TEE $DIR_OUTPUT/001-file-hash.txt
+
+# 2 EXIFTOOL
+echo -e "\nExiftool:"
+$BIN_EXIFTOOL $PATH_FILE | $BIN_TEE $DIR_OUTPUT/002-file-exif.txt
+
 exit 0
