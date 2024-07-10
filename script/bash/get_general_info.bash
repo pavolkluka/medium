@@ -141,11 +141,12 @@ fi
 # PATH VARIABLES
 PATH_FILE="$( readlink -f "$SCRIPT_ARG" )"
 PATH_DIR="$( dirname $PATH_FILE | sed -E 's?/artifacts|/malicious|/output??g' )"
+PATH_ANALYSIS_DIR="$( pwd )"
 
 # DIR VARIABLES
-DIR_ARTIFACTS="$PATH_DIR/artifacts"
-DIR_MALICIOUS="$PATH_DIR/malicious"
-DIR_OUTPUT="$PATH_DIR/output"
+DIR_ARTIFACTS="$PATH_ANALYSIS_DIR/artifacts"
+DIR_MALICIOUS="$PATH_ANALYSIS_DIR/malicious"
+DIR_OUTPUT="$PATH_ANALYSIS_DIR/output"
 
 # CHECK DECLARED SCRIPT VARIABLES
 check_empty_variables
