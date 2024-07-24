@@ -106,6 +106,7 @@ BIN_ZIPDUMP="$( which zipdump.py )"
 BIN_EXIFTOOL="$( which exiftool )"
 BIN_MKTEMP="$( which mktemp )"
 BIN_PORTEX="$( which portex )"
+BIN_STRINGS="$( which strings )"
 
 # DATE VARIABLES
 DATE_SHORT="$( date +"%Y-%m-%d" )"
@@ -238,6 +239,12 @@ COUNTER=$((COUNTER+1))
 # 004 PORTEXANALYZER
 echo -e "\n[INFO] PortEx Analyzer:"
 $BIN_PORTEX -o $DIR_OUTPUT/$( format_counter $COUNTER )-$SCRIPT_ARG_FILE-portex.txt $PATH_FILE
+echo "[INFO] Output from PortEx Analyzer of the file $SCRIPT_ARG_FILE is saved to the output file: $DIR_OUTPUT/$( format_counter $COUNTER )-$SCRIPT_ARG_FILE-portex.txt"
+COUNTER=$((COUNTER+1))
+
+# 005 STRINGS
+echo -e "\n[INFO] strings:"
+$BIN_STRINGS $PATH_FILE > $DIR_OUTPUT/$( format_counter $COUNTER )-$SCRIPT_ARG_FILE-strings.txt
 echo "[INFO] Output from PortEx Analyzer of the file $SCRIPT_ARG_FILE is saved to the output file: $DIR_OUTPUT/$( format_counter $COUNTER )-$SCRIPT_ARG_FILE-portex.txt"
 COUNTER=$((COUNTER+1))
 
