@@ -235,7 +235,7 @@ echo "[INFO] Output from Malwoverview (AlientVault: Malware Bazaar) is saved to 
 $BIN_RM -rf $FILE_TEMP
 COUNTER=$((COUNTER+1))
 
-# 002 PORTEXANALYZER
+# 004 PORTEXANALYZER
 echo -e "\n[INFO] PortEx Analyzer:"
 $BIN_PORTEX -o $DIR_OUTPUT/$( format_counter $COUNTER )-$SCRIPT_ARG_FILE-portex.txt $PATH_FILE
 echo "[INFO] Output from PortEx Analyzer of the file $SCRIPT_ARG_FILE is saved to the output file: $DIR_OUTPUT/$( format_counter $COUNTER )-$SCRIPT_ARG_FILE-portex.txt"
