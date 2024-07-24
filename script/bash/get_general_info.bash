@@ -105,6 +105,7 @@ BIN_OLEDUMP="$( which oledump.py )"
 BIN_ZIPDUMP="$( which zipdump.py )"
 BIN_EXIFTOOL="$( which exiftool )"
 BIN_MKTEMP="$( which mktemp )"
+BIN_PORTEX="$( which portex )"
 
 # DATE VARIABLES
 DATE_SHORT="$( date +"%Y-%m-%d" )"
@@ -232,6 +233,12 @@ $BIN_MALWOVERVIEW -b 1 -B $SCRIPT_ARG_FILE_HASH > $FILE_TEMP
 $BIN_CAT $FILE_TEMP | $BIN_SED -e "s/\x1B[^m]*m//g" > $DIR_OUTPUT/$( format_counter $COUNTER )-$SCRIPT_ARG_FILE-malw-alienvault-bazaar.txt
 echo "[INFO] Output from Malwoverview (AlientVault: Malware Bazaar) is saved to the output file: $DIR_OUTPUT/$( format_counter $COUNTER )-$SCRIPT_ARG_FILE-malw-alienvault-bazaar.txt"
 $BIN_RM -rf $FILE_TEMP
+COUNTER=$((COUNTER+1))
+
+# 002 PORTEXANALYZER
+echo -e "\n[INFO] PortEx Analyzer:"
+$BIN_PORTEX -o $DIR_OUTPUT/$( format_counter $COUNTER )-$SCRIPT_ARG_FILE-portex.txt $PATH_FILE
+echo "[INFO] Output from PortEx Analyzer of the file $SCRIPT_ARG_FILE is saved to the output file: $DIR_OUTPUT/$( format_counter $COUNTER )-$SCRIPT_ARG_FILE-portex.txt"
 COUNTER=$((COUNTER+1))
 
 exit 0
