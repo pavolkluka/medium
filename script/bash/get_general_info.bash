@@ -107,6 +107,8 @@ BIN_EXIFTOOL="$( which exiftool )"
 BIN_MKTEMP="$( which mktemp )"
 BIN_PORTEX="$( which portex )"
 BIN_STRINGS="$( which strings )"
+BIN_TRID="$( which trid )"
+BIN_DIEC="$( which diec )"
 
 # DATE VARIABLES
 DATE_SHORT="$( date +"%Y-%m-%d" )"
@@ -172,20 +174,29 @@ fi
 
 # 001 HASH
 echo -e "\n[INFO] Get Hash:"
-for SUM in md5sum sha1sum sha256sum
-do
-    $SUM --tag $PATH_FILE
-done > $DIR_OUTPUT/$( format_counter $COUNTER )-$SCRIPT_ARG_FILE-hash.txt
+$BIN_DIEC --special Hash $PATH_FILE > $DIR_OUTPUT/$( format_counter $COUNTER )-$SCRIPT_ARG_FILE-hash.txt
 echo "[INFO] Hash of the file $SCRIPT_ARG_FILE is saved to the output file: $DIR_OUTPUT/$( format_counter $COUNTER )-$SCRIPT_ARG_FILE-hash.txt"
 COUNTER=$((COUNTER+1))
 
-# 002 EXIFTOOL
+# 002 DETECT-IT-EASY
+echo -e "\n[INFO] Detect-It-Easy:"
+$BIN_DIEC --deepscan $PATH_FILE > $DIR_OUTPUT/$( format_counter $COUNTER )-$SCRIPT_ARG_FILE-die.txt
+echo "[INFO] Output from Detect-It-Easy of the file $SCRIPT_ARG_FILE is saved to the output file: $DIR_OUTPUT/$( format_counter $COUNTER )-$SCRIPT_ARG_FILE-die.txt"
+COUNTER=$((COUNTER+1))
+
+# 003 TRID
+echo -e "\n[INFO] TrID:"
+$BIN_TRID $PATH_FILE > $DIR_OUTPUT/$( format_counter $COUNTER )-$SCRIPT_ARG_FILE-trid.txt
+echo "[INFO] Output from TrID of the file $SCRIPT_ARG_FILE is saved to the output file: $DIR_OUTPUT/$( format_counter $COUNTER )-$SCRIPT_ARG_FILE-trid.txt"
+COUNTER=$((COUNTER+1))
+
+# 004 EXIFTOOL
 echo -e "\n[INFO] Exiftool:"
 $BIN_EXIFTOOL $PATH_FILE > $DIR_OUTPUT/$( format_counter $COUNTER )-$SCRIPT_ARG_FILE-exiftool.txt
 echo "[INFO] Output from Exiftool of the file $SCRIPT_ARG_FILE is saved to the output file: $DIR_OUTPUT/$( format_counter $COUNTER )-$SCRIPT_ARG_FILE-exiftool.txt"
 COUNTER=$((COUNTER+1))
 
-# 003 MALWOVERVIEW
+# 005 MALWOVERVIEW
 SCRIPT_ARG_FILE_HASH=$( $BIN_GREP 'SHA256' $DIR_OUTPUT/*-$SCRIPT_ARG_FILE-hash.txt | $BIN_GREP -oP '[a-fA-F0-9]{64}$' )
 echo -e "\n[INFO] Malwoverview: Virustotal"
 FILE_TEMP=$( $BIN_MKTEMP )
@@ -236,13 +247,13 @@ echo "[INFO] Output from Malwoverview (AlientVault: Malware Bazaar) is saved to 
 $BIN_RM -rf $FILE_TEMP
 COUNTER=$((COUNTER+1))
 
-# 004 PORTEXANALYZER
+# 006 PORTEXANALYZER
 echo -e "\n[INFO] PortEx Analyzer:"
 $BIN_PORTEX -o $DIR_OUTPUT/$( format_counter $COUNTER )-$SCRIPT_ARG_FILE-portex.txt $PATH_FILE
 echo "[INFO] Output from PortEx Analyzer of the file $SCRIPT_ARG_FILE is saved to the output file: $DIR_OUTPUT/$( format_counter $COUNTER )-$SCRIPT_ARG_FILE-portex.txt"
 COUNTER=$((COUNTER+1))
 
-# 005 STRINGS
+# 007 STRINGS
 echo -e "\n[INFO] strings:"
 $BIN_STRINGS $PATH_FILE > $DIR_OUTPUT/$( format_counter $COUNTER )-$SCRIPT_ARG_FILE-strings.txt
 echo "[INFO] Output from PortEx Analyzer of the file $SCRIPT_ARG_FILE is saved to the output file: $DIR_OUTPUT/$( format_counter $COUNTER )-$SCRIPT_ARG_FILE-portex.txt"
