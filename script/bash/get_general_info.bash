@@ -100,7 +100,7 @@ BIN_SORT="$( which sort )"
 BIN_TAIL="$( which tail )"
 BIN_WC="$( which wc )"
 BIN_TR="$( which tr )"
-BIN_MALWOVERVIEW="$( which malwoverview.py )"
+BIN_MALWOVERVIEW="$( which malwoverview )"
 BIN_OLEDUMP="$( which oledump.py )"
 BIN_ZIPDUMP="$( which zipdump.py )"
 BIN_EXIFTOOL="$( which exiftool )"
@@ -219,11 +219,11 @@ then
     COUNT_TEMP=1
     while IFS= read -r ID
     do
-        malwoverview.py -x 2 -X $ID > $FILE_TEMP
+        $BIN_MALWOVERVIEW -x 2 -X $ID > $FILE_TEMP
         $BIN_CAT $FILE_TEMP | $BIN_SED -e "s/\x1B[^m]*m//g" > $DIR_OUTPUT/$( format_counter $COUNTER )-$SCRIPT_ARG_FILE-malw-triage-$ID.txt
         echo "[INFO] Report from Malwoverview (Tria.ge) for ID: $ID is saved to the output file: $DIR_OUTPUT/$( format_counter $COUNTER )-$SCRIPT_ARG_FILE-malw-triage-$ID.txt"
         COUNTER=$((COUNTER+1))
-        malwoverview.py -x 7 -X $ID > $FILE_TEMP
+        $BIN_MALWOVERVIEW -x 7 -X $ID > $FILE_TEMP
         $BIN_CAT $FILE_TEMP | $BIN_SED -e "s/\x1B[^m]*m//g" > $DIR_OUTPUT/$( format_counter $COUNTER )-$SCRIPT_ARG_FILE-malw-triage-$ID-dynamic.txt
         echo "[INFO] Dynamic Report from Malwoverview (Tria.ge) for ID: $ID is saved to the output file: $DIR_OUTPUT/$( format_counter $COUNTER )-$SCRIPT_ARG_FILE-malw-triage-$ID-dynamic.txt"
         COUNTER=$((COUNTER+1))
